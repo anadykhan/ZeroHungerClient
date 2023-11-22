@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../providers/AuthProvider"
 import axios from "axios"
 import { useQuery } from "react-query"
+import { useNavigate } from "react-router-dom"
 
 const OrderForm = () => {
 
     const { user, loading } = useContext(AuthContext)
+    const navigate = useNavigate()
     const { data: userData, isLoading: userLoading } = useQuery({
         queryKey: ['userlist'],
         queryFn: () => {
@@ -15,6 +17,10 @@ const OrderForm = () => {
 
     if (userLoading) {
         return 'loading'
+    }
+
+    if(!user){
+        navigate('/signin')
     }
 
     if (!loading) {
@@ -33,6 +39,8 @@ const OrderForm = () => {
 
             const newOrder = { restraunt, food, preservation, employee, acceptance }
             console.log(newOrder)
+
+            axios.post('http://localhost:5014/api/Order', newOrder)
         }
 
         const matchedUser = userData.data.find((data) => user.email === data.email)
@@ -50,6 +58,7 @@ const OrderForm = () => {
                             name="food"
                             className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                             placeholder="Type here..."
+                            required
                         />
                     </div>
                     <div className="w-[30rem]">
@@ -60,6 +69,7 @@ const OrderForm = () => {
                             name="preservation"
                             className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
                             placeholder="Type here..."
+                            required
                         />
                     </div>
                     <button className="btn btn-primary w-[10rem]" type="submit">Order</button>
