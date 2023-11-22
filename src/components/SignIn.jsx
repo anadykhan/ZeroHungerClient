@@ -35,7 +35,7 @@ const SignIn = () => {
               <div className="w-[30rem]">
                   <label className="block text-sm font-medium text-gray-600">Password:</label>
                   <input
-                      type="text"
+                      type="password"
                       id="input"
                       name="password"
                       className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"

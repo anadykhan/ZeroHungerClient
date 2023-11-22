@@ -30,7 +30,7 @@ const OrderList = ({ data }) => {
   const matchedRestaurant = userData.data.find((data) => data.id === restraunt)
 
   return (
-    <div className="grid grid-cols-6 gap-4 grid-rows-1 items-center border-2 p-3 [20rem]">
+    <div className="grid grid-cols-6 gap-4 grid-rows-1 items-center border-2 p-3">
       <div>{matchedRestaurant.name}</div>
       <div>{preservation} hr</div>
       <div>{employee}</div>

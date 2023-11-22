@@ -1,10 +1,12 @@
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "../providers/AuthProvider"
 import axios from "axios"
 import { useQuery } from "react-query"
+import { useNavigate } from "react-router-dom"
 import OrderList from "./orderList"
-import { useContext } from "react"
-import { AuthContext } from "../providers/AuthProvider"
+import OrderListEmployee from "./OrderListEmployee"
 
-const OrderLists = () => {
+const EmployeeOrderList = () => {
     const { user, loading } = useContext(AuthContext)
     const { data: orderListsData, isLoading: orderListsLoading } = useQuery({
         queryKey: ['orderlist'],
@@ -22,17 +24,13 @@ const OrderLists = () => {
     if (orderListsLoading || userLoading) {
         return 'loading'
     }
+    const databaseUser = userData.data.find(data => data.email === user.email)
+    console.log(databaseUser.id)
+    //const filteredOrderLists = orderListsData.data.filter(data => data.restraunt === databaseUser.id)
 
-    if(user){
-        //console.log(userData.data)
-        const databaseUser = userData.data.find(data => data.email === user.email)
-        console.log(databaseUser.email)
-        const filteredOrderLists = orderListsData.data.filter(data => data.restraunt === databaseUser.id)
+    //console.log(filteredOrderLists)
 
-        console.log(filteredOrderLists)
-
-        //console.log(orderListsData.data)
-
+    if (user) {
         return (
             <div>
                 <div className="grid grid-cols-6 gap-4 grid-rows-1 items-center border-2 p-3 font-bold">
@@ -42,13 +40,19 @@ const OrderLists = () => {
                     <dir>Acceptance</dir>
                 </div>
                 {
-                    orderListsData.data.map(data => <OrderList data={data}></OrderList>)
+                    //filteredOrderLists.data.map(data => <OrderList data={data}></OrderList>)
+
+                    orderListsData.data.map((data) => {
+                        console.log(data.id)
+                        if(databaseUser.id == data.restraunt){
+                            return <OrderListEmployee data={data}></OrderListEmployee>
+                        }
+                    })
                 }
             </div>
         )
     }
 
     return <h1 className="text-2xl">No user logged in</h1>
-    
 }
-export default OrderLists
+export default EmployeeOrderList

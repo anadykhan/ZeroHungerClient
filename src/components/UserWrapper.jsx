@@ -1,8 +1,10 @@
 import { Children, useContext } from "react"
 import { AuthContext } from "../providers/AuthProvider"
+import { Navigate, useNavigate } from "react-router-dom"
 
 const UserWrapper = ({children}) => {
     const {user, loading} = useContext(AuthContext)
+    const navigate = useNavigate()
 
     if(loading){
         return 'Loading'
@@ -12,6 +14,6 @@ const UserWrapper = ({children}) => {
         return children
     }
 
-    return "Loading"
+    return <Navigate to='/signin'></Navigate>
 }
 export default UserWrapper

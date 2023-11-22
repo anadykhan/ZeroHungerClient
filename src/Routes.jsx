@@ -5,6 +5,8 @@ import Root from "./components/Root";
 import SignIn from "./components/SignIn";
 import UpdateOrder from "./components/UpdateOrder";
 import UserWrapper from "./components/UserWrapper";
+import EmployeeOrderList from "./components/EmployeeOrderList";
+
 
 const router = createBrowserRouter([
     {
@@ -13,11 +15,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <OrderLists></OrderLists>
+                element: <UserWrapper><EmployeeOrderList></EmployeeOrderList></UserWrapper>
             },
             {
                 path: "/orderform",
-                element: <OrderForm></OrderForm>
+                element: <UserWrapper><OrderForm></OrderForm></UserWrapper>
             },
             {
                 path: '/signin',
@@ -26,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: '/updateorder/:id',
                 element: <UpdateOrder></UpdateOrder>
+            },
+            {
+                path: '/admin',
+                element: <OrderLists></OrderLists>
             }
         ]
     },
